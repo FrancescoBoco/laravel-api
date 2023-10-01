@@ -1,17 +1,9 @@
 <?php
-
-namespace App\Http\Controllers\Admin\Api;
-
+namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
-// Models 
+// Models
 use App\Models\Post;
-
-// Request 
-use App\Http\Requests\Post\StorePostRequest;
-use App\Http\Requests\Post\UpdatePostRequest;
-
 class PostController extends Controller
 {
     /**
@@ -19,13 +11,18 @@ class PostController extends Controller
      */
     public function index()
     {
-        $post = Post::all();
-        
+        $posts = Post::all();
+        $posts = Post::paginate(10);
+
+        // foreach ($posts as $song) {
+        //     $song->full_cover_img = asset('storage/'.$song->cover_img);
+        // }
+
         return response()->json([
-            'success'=> true,
-            'posts'=> $post,
-        ]
-    );
+            'success' => true,
+            'posts$posts' => $posts,
+            // 'base_img_path' => asset('storage/')
+        ]);
     }
 
     /**
@@ -33,75 +30,53 @@ class PostController extends Controller
      */
     public function create()
     {
-        // return view('admin.posts.create');
+        //
     }
-
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePostRequest $request)
+    public function store(Request $request)
     {
-    //     $formDate = $request->validate();
-
-    //     $post = Post::create([
-    //         'title' => $formDate['title'],
-    //         'slug' => str()->slug($formDate['title']), 
-    //         'content' => $formDate['content'],
-    //     ]);
-    //     return redirect()->route('admin.posts.show', compact('post'));
+        //
     }
-
     /**
      * Display the specified resource.
      */
     public function show(string $slug)
     {
         $post = Post::where('slug', $slug)->first();
-
-        if($post){
-            return  response()->json([
-                'success'=> true,
-                'posts'=> $post
+        if ($post) {
+            return response()->json([
+                'success' => true,
+                'post' => $post
             ]);
         }
-        else{
-            return  response()->json([
-                'success'=> false,
-                'message'=> 'Page not found'
+        else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Not Found'
             ], 404);
         }
     }
-
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Post $post)
     {
-        // return view('admin.posts.edit', compact('post'));
+        //
     }
-
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePostRequest $request, Post $post)
+    public function update(Request $request, Post $post)
     {
-        // $formDate = $request->validated();
-
-        // $post->update([
-        //     'title' => $formDate['title'],
-        //     'slug' => str()->slug($formDate['title']), 
-        //     'content' => $formDate['content'],
-        // ]);
-        // return redirect()->route('admin.posts.show', compact('post'));
+        //
     }
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Post $post)
     {
-        // $post->delete();
-        
-        // return redirect()->route('admin.posts.index');
+        //
     }
 }
