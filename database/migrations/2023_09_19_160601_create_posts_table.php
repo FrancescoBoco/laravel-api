@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug');
             $table->text('content');
-            // $table->string('img', 1024)->nullable();
+            $table->string('img', 1024)->nullable();
 
         });
     }
