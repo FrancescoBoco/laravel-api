@@ -1,9 +1,12 @@
 <?php
+
 namespace App\Http\Controllers\Api;
-use Illuminate\Http\Request;
+
 use App\Http\Controllers\Controller;
-// Models
+use Illuminate\Http\Request;
+
 use App\Models\Post;
+
 class PostController extends Controller
 {
     /**
@@ -11,7 +14,6 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
         $posts = Post::paginate(10);
 
         // foreach ($posts as $song) {
